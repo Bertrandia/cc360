@@ -1144,6 +1144,21 @@ export default function OtsDashboard() {
 
         if (row.isRecurring && row.recurringTasks.length > 0) {
             return (
+                <>
+                {/* NEW line Add 1148 to 1161 and alos add <></> at 08-04-2026 */}
+                 <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-2">
+
+                        <div className="mt-2">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">
+                                Task Description / Scope of Work
+                            </p>
+
+                            <div className="bg-gray-50 border rounded-xl p-2 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                                {row?.scopeOfWork || row?.taskDescription || "No description available"}
+                            </div>
+                        </div>
+
+                    </div>
                 <RecurringTaskCard
                     tasks={row.recurringTasks}
                     onLMServiceCard={handleOpenLMServiceCard}
@@ -1171,6 +1186,7 @@ export default function OtsDashboard() {
                         triggerSnackbar("Task updated successfully!", "success");
                     }}
                 />
+                </>
             );
         }
 
@@ -1187,8 +1203,32 @@ export default function OtsDashboard() {
 
         if (candidateDetails.length === 0) {
             return (
-                <div className="text-gray-500 p-4 text-center bg-white rounded border text-sm" style={{ fontFamily: 'NeuzeitGro, sans-serif' }}>
-                    No candidate details found for this request
+                // <div className="text-gray-500 p-4 text-center bg-white rounded border text-sm" style={{ fontFamily: 'NeuzeitGro, sans-serif' }}>
+                //     No candidate details found for this request
+                // </div>
+                    <div className="text-gray-500 p-4 text-start bg-white rounded border">
+
+                    {/* New Code line */}
+
+                    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+
+                        <div className="mt-5">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">
+                                Task Description / Scope of Work
+                            </p>
+
+                            <div className="bg-gray-50 border rounded-xl p-4 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                                {row?.scopeOfWork || row?.taskDescription || "No description available"}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* new code line end */}
+
+                    <div className="text-gray-800 p-4 text-center bg-white rounded border">
+                        No candidate details found for this request
+                    </div>
                 </div>
             );
         }

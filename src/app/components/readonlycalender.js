@@ -339,18 +339,26 @@ export default function ReadOnlyScheduleModal({ open, onClose }) {
                             </div>
                         </div>
                     ) : (
-                        <div className="overflow-x-auto">
+                        <div className=
+                        // "overflow-x-auto"
+                        "overflow-auto max-h-full"
+                        >
                             <table className="w-full border-collapse min-w-max">
-                                <thead className="sticky top-0 bg-gray-100 z-10">
+                                <thead className=
+                                //"sticky top-0 bg-gray-100 z-10"
+                                "sticky top-0 z-30"
+                                >
                                     <tr>
-                                        <th className="border p-2 text-left text-xs md:text-sm font-semibold min-w-[120px] md:min-w-[150px]">
+                                        <th className="sticky left-0 z-40 bg-gray-100 border p-2 text-left text-xs md:text-sm font-semibold min-w-[120px] md:min-w-[150px]">
+                                        {/* <th className="border p-2 text-left text-xs md:text-sm font-semibold min-w-[120px] md:min-w-[150px]"> */}
                                             <div className="flex items-center gap-2">
                                                 <User className="w-4 h-4 text-gray-600" />
                                                 Candidate
                                             </div>
                                         </th>
                                         {filteredTimeSlots.map(slot => (
-                                            <th key={slot.start} className="border p-2 text-center text-xs font-semibold min-w-[80px] md:min-w-[100px]">
+                                            // <th key={slot.start} className="border p-2 text-center text-xs font-semibold min-w-[80px] md:min-w-[100px]">
+                                            <th key={slot.start} className="sticky top-0 z-30 bg-gray-100 border p-2 text-center text-xs font-semibold min-w-[80px] md:min-w-[100px]">
                                                 {slot.label}
                                             </th>
                                         ))}
@@ -359,7 +367,8 @@ export default function ReadOnlyScheduleModal({ open, onClose }) {
                                 <tbody>
                                     {candidates.map(candidate => (
                                         <tr key={candidate.docId} className="hover:bg-gray-50">
-                                            <td className="border p-2 text-xs md:text-sm bg-gray-50 font-medium">
+                                            {/* <td className="border p-2 text-xs md:text-sm bg-gray-50 font-medium"> */}
+                                            <td className="sticky left-0 z-20 bg-gray-50 border p-2 text-xs md:text-sm font-medium">
                                                 <div>
                                                     <div className="font-semibold">{candidate.name}</div>
                                                     <div className="text-xs text-gray-500">{candidate.id}</div>

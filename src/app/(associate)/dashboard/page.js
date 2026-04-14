@@ -2564,6 +2564,7 @@ function Dashboard() {
         { key: "candidateName", label: "Candidate Name" },
         { key: "candidateId", label: "Candidate ID" },
         { key: "candidateContact", label: "Contact" },
+        
         {
             key: "candidateStatus",
             label: "Candidate Status",
@@ -2867,72 +2868,73 @@ function Dashboard() {
             return (
 
                 <div className="text-gray-500 p-4 text-start bg-white rounded border">
-                    
- {/* New Code line */}
 
-<div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+                    {/* New Code line */}
 
-  {/* Header */}
-  <div className="mb-5 border-b pb-3">
-    <h2 className="text-lg font-semibold text-gray-800">
-      Task Details
-    </h2>
-  </div>
+                    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
 
-  {/* Grid Info */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {/* Header */}
+                        <div className="mb-5 border-b pb-3">
+                            <h2 className="text-sm font-semibold text-gray-800">
+                                Task Details
+                            </h2>
+                        </div>
 
-    {/* Task ID */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Task ID</p>
-      <p className="text-sm font-small text-gray-800 mt-1">
-        {row?.taskID || "N/A"}
-      </p>
-    </div>
+                        {/* Grid Info */}
+                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
 
-    {/* Ethnicity */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Ethnicity Preference</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.ethnicityPreference || "N/A"}
-      </p>
-    </div>
+                            {/* Task ID */}
+                            <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500">Task ID</p>
+                                <p className="text-xs font-small text-gray-800 mt-1">
+                                    {row?.taskID || "N/A"}
+                                </p>
+                            </div>
 
-    {/* Gender */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Gender</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.gender || "N/A"}
-      </p>
-    </div>
+                            {/* Ethnicity */}
+                            <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500">Ethnicity Preference</p>
+                                <p className="text-xs font-medium text-gray-800 mt-1">
+                                    {row?.ethnicityPreference || "N/A"}
+                                </p>
+                            </div>
 
-    {/* Language */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Language</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.language || "N/A"}
-      </p>
-    </div>
+                            {/* Gender */}
+                            <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500">Gender</p>
+                                <p className="text-xs font-medium text-gray-800 mt-1">
+                                    {row?.gender || "N/A"}
+                                </p>
+                            </div>
 
-  </div>
+                            {/* Language */}
+                            <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500">Language</p>
+                                <p className="text-xs font-medium text-gray-800 mt-1">
+                                    {row?.language || "N/A"}
+                                </p>
+                            </div>
 
-  {/* Description Section (Highlight) */}
-  <div className="mt-6">
-    <p className="text-sm font-semibold text-gray-700 mb-2">
-      Task Description / Scope of Work
-    </p>
+                        </div>
 
-    <div className="bg-gray-50 border rounded-xl p-4 text-sm text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
-      {row?.scopeOfWork || row?.taskDescription || "No description available"}
-    </div>
-  </div>
+                        {/* Description Section (Highlight) */}
+                        <div className="mt-5">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">
+                                Task Description / Scope of Work
+                            </p>
 
-</div>
-    {/* new code line end */}
+                            <div className="bg-gray-50 border rounded-xl p-4 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                                {row?.scopeOfWork || row?.taskDescription || "No description available"}
+                            </div>
+                        </div>
 
-       <div className="text-gray-800 p-4 text-center bg-white rounded border">
-                    No candidate details found for this request
-                   </div>
+                    </div>
+
+                    {/* new code line end */}
+
+                    <div className="text-gray-800 p-4 text-center bg-white rounded border">
+                        No candidate details found for this request
+                    </div>
                 </div>
             );
         }
@@ -2941,6 +2943,81 @@ function Dashboard() {
         const displayFields = [
             { key: 'candidateId', label: 'Candidate ID' },
             { key: 'candidateContact', label: 'Contact No.' },
+            // { key: 'resourceAllocatedTime', label: 'Resource Allocated Time'  },
+            {
+    key: 'resourceAllocatedTime',
+    label: 'Resource Allocated Time',
+    render: (_, candidate) => {
+        let raw = candidate.resourceAllocatedTime;
+
+        if (!raw) {
+            return (
+                <span
+                    className="text-gray-500 text-[10px]"
+                    style={{ fontFamily: 'NeuzeitGro, sans-serif' }}
+                >
+                    N/A
+                </span>
+            );
+        }
+
+        try {
+            // ✅ Handle array
+            if (Array.isArray(raw)) {
+                raw = raw[0];
+            }
+
+            let dateObj;
+
+            // ✅ Firestore timestamp (seconds)
+            if (raw?.seconds) {
+                dateObj = new Date(raw.seconds * 1000);
+            }
+            // ✅ Firebase timestamp
+            else if (raw?.toDate) {
+                dateObj = raw.toDate();
+            }
+            // ✅ fallback
+            else {
+                dateObj = new Date(raw);
+            }
+
+            if (!dateObj || isNaN(dateObj)) {
+                return (
+                    <span className="text-gray-500 text-[10px]">
+                        Invalid Date
+                    </span>
+                );
+            }
+
+            // ✅ Format: 07 Apr 2026, 10:30 AM
+            const formatted = dateObj.toLocaleString('en-IN', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+
+            return (
+                <span
+                    className="text-blue-600 font-semibold text-[10px]"
+                    style={{ fontFamily: 'NeuzeitGro, sans-serif' }}
+                >
+                    {formatted}
+                </span>
+            );
+        } catch (error) {
+            console.error("Date render error:", error);
+            return (
+                <span className="text-red-500 text-[10px]">
+                    Error
+                </span>
+            );
+        }
+    }
+},
             {
                 key: 'candidateStatus',
                 label: 'Current Stage',
@@ -2979,68 +3056,68 @@ function Dashboard() {
 
         return (
             <div className="bg-gray-50 p-4 sm:p-6">
-{console.log("hello",row)}
-{/* New Code line */}
+                {console.log("hello", row)}
+                {/* New Code line */}
 
-<div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
 
-  {/* Header */}
-  <div className="mb-5 border-b pb-3">
-    <h2 className="text-lg font-semibold text-gray-800">
-      Task Details
-    </h2>
-  </div>
+                    {/* Header */}
+                    <div className="mb-5 border-b pb-3">
+                        <h2 className="text-sm font-semibold text-gray-800">
+                            Task Details
+                        </h2>
+                    </div>
 
-  {/* Grid Info */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Grid Info */}
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
 
-    {/* Task ID */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Task ID</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.taskID || "N/A"}
-      </p>
-    </div>
+                        {/* Task ID */}
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                            <p className="text-xs text-gray-500">Task ID</p>
+                            <p className="text-xs font-medium text-gray-800 mt-1">
+                                {row?.taskID || "N/A"}
+                            </p>
+                        </div>
 
-    {/* Ethnicity */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Ethnicity Preference</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.ethnicityPreference || "N/A"}
-      </p>
-    </div>
+                        {/* Ethnicity */}
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                            <p className="text-xs text-gray-500">Ethnicity Preference</p>
+                            <p className="text-xs font-medium text-gray-800 mt-1">
+                                {row?.ethnicityPreference || "N/A"}
+                            </p>
+                        </div>
 
-    {/* Gender */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Gender</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.gender || "N/A"}
-      </p>
-    </div>
+                        {/* Gender */}
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                            <p className="text-xs text-gray-500">Gender</p>
+                            <p className="text-xs font-medium text-gray-800 mt-1">
+                                {row?.gender || "N/A"}
+                            </p>
+                        </div>
 
-    {/* Language */}
-    <div className="bg-gray-50 p-3 rounded-lg">
-      <p className="text-xs text-gray-500">Language</p>
-      <p className="text-sm font-medium text-gray-800 mt-1">
-        {row?.language || "N/A"}
-      </p>
-    </div>
+                        {/* Language */}
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                            <p className="text-xs text-gray-500">Language</p>
+                            <p className="text-xs font-medium text-gray-800 mt-1">
+                                {row?.language || "N/A"}
+                            </p>
+                        </div>
 
-  </div>
+                    </div>
 
-  {/* Description Section (Highlight) */}
-  <div className="mt-6">
-    <p className="text-sm font-semibold text-gray-700 mb-2">
-      Task Description / Scope of Work
-    </p>
+                    {/* Description Section (Highlight) */}
+                    <div className="mt-6">
+                        <p className="text-xs font-semibold text-gray-700 mb-2">
+                            Task Description / Scope of Work
+                        </p>
 
-    <div className="bg-gray-50 border rounded-xl p-4 text-sm text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
-      {row?.scopeOfWork || row?.taskDescription || "No description available"}
-    </div>
-  </div>
+                        <div className="bg-gray-50 border rounded-xl p-4 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                            {row?.scopeOfWork || row?.taskDescription || "No description available"}
+                        </div>
+                    </div>
 
-</div>
-    {/* new code line end */}
+                </div>
+                {/* new code line end */}
 
 
 

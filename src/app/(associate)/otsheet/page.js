@@ -278,9 +278,41 @@ function Otssheet() {
 
         if (candidateDetails.length === 0) {
             return (
-                <div className="text-gray-500 p-4 text-center bg-white rounded border">
-                    No candidate details found for this patron
+
+                  <div className="text-gray-500 p-4 text-start bg-white rounded border">
+
+                    {/* New Code line */}
+
+                    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-3">
+
+                        {/* Header */}
+                        
+
+                        {/* Grid Info */}
+                      
+
+                        {/* Description Section (Highlight) */}
+                        <div className="mt-1">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">
+                                Task Description / Scope of Work
+                            </p>
+
+                            <div className="bg-gray-50 border rounded-xl p-4 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                                {patron?.scopeOfWork || patron?.taskDescription || "No description available"}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* new code line end */}
+
+                    <div className="text-gray-800 p-4 text-center bg-white rounded border">
+                        No candidate details found for this request
+                    </div>
                 </div>
+                // <div className="text-gray-500 p-4 text-center bg-white rounded border">
+                //     No candidate details found for this patron
+                // </div>
             );
         }
 
@@ -309,6 +341,21 @@ function Otssheet() {
 
         return (
             <div className="bg-gray-50 p-4 sm:p-6">
+
+                     <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-3 mb-3">
+
+                        {/* Description Section (Highlight) */}
+                        <div className="mt-1">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">
+                                Task Description / Scope of Work
+                            </p>
+
+                            <div className="bg-gray-50 border rounded-xl p-4 text-xs text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                                {patron?.scopeOfWork || patron?.taskDescription || "No description available"}
+                            </div>
+                        </div>
+
+                    </div>
                 {candidateDetails.map((candidate, candIdx) => (
                     <NormalCandidateCards
                         key={candidate.id || candIdx}
